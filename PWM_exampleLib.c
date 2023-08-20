@@ -1,3 +1,42 @@
+/*
+ REFERANCE: https://www.microchip.com/stellent/groups/picmicro_sg/documents/devicedoc/cn547043.pdf
+
+ Kullanım kolaylığını sağlayabilmek adına varolan kütüphanelerden farklı şekilde eşleştirmeli bir struct yapısı kullanıyorum.
+ Her bir PWM sinyaline tanımlı bir struct, hem PWM için gerekli on-off, freq, duty gibi değerleri topluyor hem de hangi timer'ı ve hangi kanalı kullanacağını seçiyor.
+ Kütüphane, ek olarak pwm'in kullanacağı timer'ı da modifiye ederek hassasiyeti arttırmaktadır.
+
+ */ 
+
+/* EXAMPLE CODE */
+
+    // first argument is the ID of PWM channel, 0 in example
+    pwmSetDuty(0, 50); // %50 of Freq
+    pwmSetFreq(0, 10000); // 10kHz
+
+    pwmSetCh(0, 2); // select 2nd channel as PWM Output
+    pwmSetTimer(0, 2); // select 2nd Timer for PWM
+    pwmSetStatus(0, 1); // Activate the PWM
+
+/* ---- */
+
+
+
+
+/* ---- LIBRARY.h ---- */
+    PWM_t pwms[5] = {
+
+        { // 0 
+            .freq = 2000,
+            .duty = 50,
+            .flag = (1 << pwm_chBitRank) | (2 << pwm_timerBitRank) | (1 << pwm_statusBitRank),
+        },
+        { // 1
+            .freq = 2000,
+            .duty = 50,
+            .flag = (2 << pwm_chBitRank) | (4 << pwm_timerBitRank) | (1 << pwm_statusBitRank),
+        }
+        // ... Continue up to 5 PWM
+    };
 
 
 /* ---- LIBRARY ---- */
