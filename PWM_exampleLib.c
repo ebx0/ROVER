@@ -38,6 +38,21 @@
         // ... Continue up to 5 PWM
     };
 
+/* ---- STRUCT ---- */
+#define pwm_chBitRank 5
+#define pwm_timerBitRank 2 
+#define pwm_statusBitRank 1
+
+#define pwm_chBitSize 0b111
+#define pwm_timerBitSize 0b111
+#define pwm_statusBitSize 0b1
+
+typedef struct PWM {
+    dword freq;
+    byte duty;
+    byte flag;
+} PWM_t;
+
 
 /* ---- LIBRARY ---- */
 void pwmInit(byte pwmNo) {
