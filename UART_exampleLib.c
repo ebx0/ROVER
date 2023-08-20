@@ -1,4 +1,4 @@
-// MAIN
+/* ---- MAIN---- */
 char rxBuffer[BUFFER_SIZE];
 byte rxBufferHead = 0;
 byte bufferState = 0; // 0: ready, 1: writing, 2: stopped.
@@ -9,7 +9,9 @@ void rcScan(char* receivedData) {
     */
 }
 
-// INTERRUPT
+
+
+/* ---- INTERRUPT ---- */
 void __interrupt() ISR(void) {
     else if ( PIR1bits.RC1IF ) { // USART1 RC
         rcScan(RC1REG);
@@ -17,7 +19,9 @@ void __interrupt() ISR(void) {
     }
 }
 
-// LIBRARY
+
+
+/* ---- LIBRARY ---- */
 void usart1Init(dword baud_rate) {
     TRISC6 = 0; /* Make Tx pin as output*/
     TRISC7 = 1; /* Make Rx pin as input*/
@@ -41,8 +45,7 @@ char usart1RX(void) {
     return RCREG1; // Return the received data
 }
 
-// To write unkown bytes of char arrat with UART protocol
-void usart1WriteString(char* text) {
+void usart1WriteString(char* text) { // To write unkown bytes of char array with UART protocol
     for ( int i = 0; i < 128; i++ ) {
         if ( text[i] == 0 ) {
             return;
@@ -51,8 +54,7 @@ void usart1WriteString(char* text) {
     }
 }
 
-// To write INTEGER values with UART protocol.
-void usart1WriteInt(qword integer, byte n) {
+void usart1WriteInt(qword integer, byte n) { // To write INTEGER values with UART protocol.
     byte temp;
     byte isStart = 0;
     for ( byte i = 1; i <= n; i++ ) {
