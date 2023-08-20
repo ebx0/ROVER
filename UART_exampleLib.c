@@ -1,5 +1,23 @@
-// Serial Communication
+// MAIN
+char rxBuffer[BUFFER_SIZE];
+byte rxBufferHead = 0;
+byte bufferState = 0; // 0: ready, 1: writing, 2: stopped.
 
+void rcScan(char* receivedData) {
+    /*
+     İç haberleşme protokolünüze uygun şekilde kodunuzu doldurabilirsiniz.
+    */
+}
+
+// INTERRUPT
+void __interrupt() ISR(void) {
+    else if ( PIR1bits.RC1IF ) { // USART1 RC
+        rcScan(RC1REG);
+        PIR1bits.RC1IF = 0;
+    }
+}
+
+// LIBRARY
 void usart1Init(dword baud_rate) {
     TRISC6 = 0; /* Make Tx pin as output*/
     TRISC7 = 1; /* Make Rx pin as input*/
