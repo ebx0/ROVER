@@ -71,9 +71,10 @@ void errorMessage(byte errorID){
     }
 }
 
-// Ask the user to enter a valid mass limit that does not exceed MIN_MASS_LIMIT
-// Set the massLimit as a legitimate value input
-void askMassLimit() {
+/** INITIALIZATION **/
+void init(){
+    // Ask the user to enter a valid mass limit that does not exceed MIN_MASS_LIMIT
+    // Set the massLimit as a legitimate value input
     do {
         printf("Maksimum Kütle Limitini Giriniz: ");
         if (scanf("%d", &massLimit) != 1 || massLimit < 1) { // Handle invalid input
@@ -85,12 +86,6 @@ void askMassLimit() {
         }
     } while (massLimit < MIN_MASS_LIMIT);
     printf("Gecerli bir kütle limiti girildi.\n");
-}
-
-
-/** INITIALIZATION **/
-void init(){
-    askMassLimit();
     printf("Belirlenen en fazla kütle degeri = %d gram\n", massLimit);
     printf("Sistem Baslatildi.\n");
 }
