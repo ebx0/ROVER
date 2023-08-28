@@ -107,7 +107,6 @@ void loop(){
                 showProduct();
             }
             else if (massLast <= 0){ // If mass negative or zero:
-            
                 errorMessage(ERR_CONVEYOR_ERROR);// SISTEM BANT HATASI
                 break;
             }
@@ -118,7 +117,6 @@ void loop(){
         }
         else {
             errorMessage(ERR_INVALID_INPUT);// INPUT ERROR
-            printf("%u",massLast);
         }
         
     }
