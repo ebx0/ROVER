@@ -6,12 +6,23 @@
 typedef unsigned int dword;
 typedef unsigned char byte;
 
-/** PROJECT DEFINES **/
-#define ERR_EMPTY_ARRAY 1
-
 /** PROJECT VARIABLES **/
 int arr[] = {8, 15, 2, 4, 20, -7, 5, 9, 14, 11};
 size_t arrLength = (sizeof(arr) / sizeof(arr[0]));
+
+/** ERROR HANDLING **/
+enum errorCodes {
+    ERR_EMPTY_ARRAY = 1,
+};
+
+const char *ErrorMessages[] = { "",
+    "Array is empty.", // 1
+};
+
+byte error(byte errorCode){
+    fprintf(stderr, "Error: %s\n", ErrorMessages[ERR_EMPTY_ARRAY]);
+    return ERR_EMPTY_ARRAY;
+}
 
 /** FUNCTION DECLARATIONS **/
 void shift_element(int *pElement);
@@ -22,10 +33,7 @@ void print_array();
 int main() {
   
   // Error Handling
-  if (!arrLength) {
-    fprintf(stderr, "Error: Array is empty.\n");
-    return ERR_EMPTY_ARRAY;
-  }
+  if (!arrLength) return error(ERR_EMPTY_ARRAY);
 
   print_array();
   insertion_sort();
@@ -39,7 +47,8 @@ int main() {
 // Takes one element and shifts until there is no higher value in its left
 void shift_element(int *pElement) {
   for (int *e = pElement; e > arr && *e < *(e - 1); e--) {
-    *e ^= *(e - 1); // XOR Swap Algorithm
+    // XOR Swap Algorithm
+    *e ^= *(e - 1);
     *(e - 1) ^= *e;
     *e ^= *(e - 1);
   }
