@@ -20,30 +20,25 @@ void printArray();
 
 // Takes one element and shifts until there is no higher value in its left
 void shift_element(int* pElement){ 
-    byte indexVal = pElement - &arr[0]; // Find index of pointed item in array
-        
-    for(byte i = 0; i < indexVal &&  *(pElement-1-i) > *(pElement-i); i++){
-        byte temp = *(pElement-i);
-        *(pElement-i) = *(pElement-1-i);
-        *(pElement-1-i) = temp;
-    }
+  for(int* e = pElement; e > arr && *e < *(e-1); e--){
+      *e ^= *(e-1); //XOR Swap Algorithm
+      *(e-1) ^= *e;
+      *e ^= *(e-1);
+  }
 }
 
-// Sorts the array
+// Sorts the array with insertion algorithm
 void insertion_sort(){
-    for(byte i = 1; i < arrLenght; i++){
-        int* iElement1 = &arr[0]+(i);
-        int* iElement2 = &arr[0]+(i-1);
-        
-        if (*iElement1 < *iElement2) shift_element(iElement1);
+    for(int* e = arr; e < arr + arrLenght; e++){
+        if (*e < *(e-1)) shift_element(e);
     }
 }
 
-//Prints the items of array
+//Prints the elements of array
 void print_array(){
     printf("Array: ");
-    for(int i=0; i < arrLenght; i++){
-        printf(" %d,", arr[i]);
+    for(int* e = arr; e < arr + arrLenght; e++){
+        printf(" %d,", *e);
     }
     printf("\b \n");
 } 
