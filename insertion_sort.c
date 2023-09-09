@@ -13,15 +13,22 @@ size_t arrLength = (sizeof(arr) / sizeof(arr[0]));
 /** ERROR HANDLING **/
 enum errorCodes {
     ERR_EMPTY_ARRAY = 1,
+    ERR_last, // Only for indexing, do not use or delete
 };
 
-const char *ErrorMessages[] = { "",
-    "Array is empty.", // 1
+const char *errorMessages[] = {
+    "",                 // 0: No error
+    "Array is empty.",  // 1: ERR_EMPTY_ARRAY
 };
 
-byte error(byte errorCode){
-    fprintf(stderr, "Error: %s\n", ErrorMessages[ERR_EMPTY_ARRAY]);
-    return ERR_EMPTY_ARRAY;
+byte error(byte errorCode) {
+    if (errorCode > 0 && errorCode < ERR_last) {
+        fprintf(stderr, "Error [%d]: %s\n", errorCode, errorMessages[errorCode]);
+        return errorCode;
+    } else {
+        fprintf(stderr, "Unknown error code: %d\n", errorCode);
+        return errorCode;
+    }
 }
 
 /** FUNCTION DECLARATIONS **/
