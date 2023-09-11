@@ -7,6 +7,7 @@ typedef unsigned int dword;
 typedef unsigned char byte;
 
 /** ERROR HANDLING **/
+#define UNKNOWN_ERROR_CODE 255;
 enum errorCodes {
   NO_ERROR = 0,
   ERR_INVALID_INPUT,
@@ -25,7 +26,7 @@ byte printError(int errorCode) {
   } 
   else {
     fprintf(stderr, "Unknown error code: %d\n", errorCode);
-    return errorCode;
+    return UNKNOWN_ERROR_CODE;
   }
 }
 
