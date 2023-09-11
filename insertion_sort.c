@@ -7,10 +7,11 @@ typedef unsigned int dword;
 typedef unsigned char byte;
 
 /** PROJECT VARIABLES **/
-int arr[] = {8, 15, 2, 4, 20, -7, 5, 9, 14, 11};
+int arr[] = { 8, 15, 2, 4, 20, -7, 5, 0, 14, 14 };
 size_t arrLength = (sizeof(arr) / sizeof(arr[0]));
 
 /** ERROR HANDLING **/
+#define UNKNOWN_ERROR_CODE 255;
 enum errorCodes {
     ERR_EMPTY_ARRAY = 1,
     ERR_last, // Only for indexing, do not use or delete
@@ -21,13 +22,13 @@ const char *errorMessages[] = {
     "Array is empty.",  // 1: ERR_EMPTY_ARRAY
 };
 
-byte error(byte errorCode) {
+byte printError(byte errorCode) {
     if (errorCode > 0 && errorCode < ERR_last) {
         fprintf(stderr, "Error [%d]: %s\n", errorCode, errorMessages[errorCode]);
         return errorCode;
     } else {
         fprintf(stderr, "Unknown error code: %d\n", errorCode);
-        return errorCode;
+        return UNKNOWN_ERROR_CODE;
     }
 }
 
@@ -38,9 +39,8 @@ void print_array();
 
 /** MAIN **/
 int main() {
-  
   // Error Handling
-  if (!arrLength) return error(ERR_EMPTY_ARRAY);
+  if (!arrLength) return printError(ERR_EMPTY_ARRAY);
 
   print_array();
   insertion_sort();
@@ -58,6 +58,10 @@ void shift_element(int *pElement) {
     *e ^= *(e - 1);
     *(e - 1) ^= *e;
     *e ^= *(e - 1);
+    //Generic Swap (Alternative)
+    //byte tempVal = *(e - 1);
+    //*(e - 1) = *e;
+    //*e = tempVal;
   }
 }
 
