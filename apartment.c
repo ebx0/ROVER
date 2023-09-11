@@ -31,11 +31,13 @@ byte printError(int errorCode) {
 
 /** PROJECT STRUCTS **/
 typedef struct apartment {
+  byte flatNo;
   byte flatPower;
 } APARTMENT_t;
 
 /** PROJECT CONFIG **/
 #define APT_SIZE 32
+#define DEFAULT_FLAT_POWER 0
 
 /** SYSTEM FUNCTIONS **/
 // Read and dispose of data from stdin until \n or EOF encountered - Return \n or EOF
@@ -47,6 +49,7 @@ int clearBuffer(void) {
 
 /** FUNCTION DECLARATIONS **/
 byte getPowerData(dword*);
+void initApartmentStruct(APARTMENT_t*);
 void setApartmentData(APARTMENT_t*, dword);
 byte showApartments(APARTMENT_t*);
 
@@ -55,6 +58,7 @@ int main() {
   dword powerData;
   APARTMENT_t rovreApt[APT_SIZE];
   
+  initApartmentStruct(rovreApt);
   while (getPowerData(&powerData) != NO_ERROR);
   setApartmentData(rovreApt, powerData);
   showApartments(rovreApt);
@@ -75,6 +79,14 @@ byte getPowerData(dword* powerData) {
   return NO_ERROR;
 }
 
+//Initialize the apartment structure by assigning each apartment an index No.
+void initApartmentStruct(APARTMENT_t* aprt){
+  for(byte i = 0; i < APT_SIZE; i++){
+      aprt[i].flatNo = i;
+      aprt[i].flatPower = DEFAULT_FLAT_POWER;
+  }
+}
+
 //Set the struct by given 32-bit power data
 void setApartmentData(APARTMENT_t* aprt, dword data){
   printf("İşaretsiz, 32-bit genişliğinde ikilik tabandaki karşılığı: \n");
@@ -92,11 +104,11 @@ byte showApartments(APARTMENT_t* aprt){
   printf("\n\n---------------- APARTMAN DURUMLARI ----------------\n\n");
   for(byte i = 0; i < APT_SIZE; i++){
       if (aprt[i].flatPower) {
-        printf("Apartman No: %2d Elektrik Durumu: Yanik\n", i);
+        printf("Apartman No: %2d Elektrik Durumu: Yanik\n", aprt[i].flatNo);
         totalPowerOn++;
       }
       else {
-        printf("Apartman No: %2d Elektrik Durumu: Sonuk\n", i);
+        printf("Apartman No: %2d Elektrik Durumu: Sonuk\n", aprt[i].flatNo);
       }
   }
   printf(" Yanik daire sayisi:%2d   Sonuk daire sayisi:%2d\n", totalPowerOn, APT_SIZE-totalPowerOn);
