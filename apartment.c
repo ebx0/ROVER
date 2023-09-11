@@ -36,7 +36,6 @@ typedef struct apartment {
 
 /** PROJECT CONFIG **/
 #define APT_SIZE 32
-#define BITS_PER_BYTE 8
 
 /** SYSTEM FUNCTIONS **/
 // Read and dispose of data from stdin until \n or EOF encountered - Return \n or EOF
@@ -82,7 +81,7 @@ void setApartmentData(APARTMENT_t* aprt, dword data){
   for(char i = APT_SIZE-1; i >= 0; i--){
     byte tempStatus = (data & (1u << i)) >> i;
     printf("%d", tempStatus );
-    if (i % BITS_PER_BYTE == 0) printf(" ");
+    if (i % 8 == 0) printf(" ");
     aprt[i].flatPower = tempStatus;
   }    
 }
